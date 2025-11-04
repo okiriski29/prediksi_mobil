@@ -2,7 +2,3 @@ pandas
 scikit-learn
 joblib
 streamlit
-streamlit-lottie
-time
-json
-datetime
