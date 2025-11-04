@@ -86,16 +86,16 @@ with tab2:
         year = st.selectbox(
         label='Pilih Tahun',
         options=years,
-        index=0
+        index=20
         )
-        mileage = st.number_input("Jarak Tempuh (mileage, mil)", min_value=0, value=6821, step=100)
-        tax = st.number_input("Pajak (tax, £)", min_value=0, value=150, step=10)
+        mileage = st.number_input("Jarak Tempuh (mileage, mil)", min_value=0, value=2000, step=100)
+        tax = st.number_input("Pajak (tax, £)", min_value=0, value=200, step=10)
 
     # Kolom 2: Input Numerik Lanjutan & Transmisi
     with col2:
         st.header("Spesifikasi Teknis")
         mpg = st.number_input("MPG (Miles per Gallon)", min_value=0.0, value=36.2, step=0.1, format="%.1f")
-        engineSize = st.number_input("Ukuran Mesin (liter)", min_value=0.5, max_value=6.0, value=1.5, step=0.1, format="%.1f")
+        engineSize = st.number_input("Ukuran Mesin (liter)", min_value=0.5, max_value=6.0, value=2.0, step=0.1, format="%.1f")
         
         # Input Transmisi (Menggunakan nama kolom tanpa prefix untuk display)
         st.subheader("Transmisi")
@@ -109,7 +109,7 @@ with tab2:
         # Input Model Mobil
         st.subheader("Model Mobil")
         model_display = [kol.replace('model_', '') for kol in kolom_model_mobil]
-        model_pilihan_display = st.selectbox("Pilih Model Mobil", model_display, index=model_display.index(' Supra'), key='select_model')
+        model_pilihan_display = st.selectbox("Pilih Model Mobil", model_display, index=model_display.index(' Urban Cruiser'), key='select_model')
         
         # Input Bahan Bakar
         st.subheader("Jenis Bahan Bakar")
