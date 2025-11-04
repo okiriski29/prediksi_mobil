@@ -3,12 +3,13 @@ import pandas as pd
 import numpy as np
 import joblib
 from datetime import date
-current_year = date.today().year
-years = list(range(1997, current_year + 1))
 import time
 import json
 import streamlit as st
 from streamlit_lottie import st_lottie
+
+current_year = date.today().year
+years = list(range(1997, current_year + 1))
 
 path = "Car.json"
 with open(path,"r") as file:
@@ -59,6 +60,20 @@ with tab1:
     st.link_button("Dataset", "https://www.kaggle.com/datasets/adityadesai13/used-car-dataset-ford-and-mercedes?resource=download&select=toyota.csv")
     df = pd.read_csv('toyota.csv')
     st.dataframe(df)
+    kol_1, kol_2, kol_3 = st.columns([1, 1, 1])
+    with kol_1:
+        st.subheader("Rata-Rata Harga Berdasarkan Model Mobil")
+        average_price_by_model = df.groupby('model')['price'].mean().sort_values(ascending=False)
+        st.dataframe(average_price_by_model)
+    with kol_2:
+        st.subheader("Rata-Rata Harga Berdasarkan Bahan Bakar")
+        average_price_by_fuel = df.groupby('fuelType')['price'].mean().sort_values(ascending=False)
+        st.dataframe(average_price_by_fuel)
+    with kol_3:
+        st.subheader("Rata-Rata Harga Berdasarkan Transmisi")
+        average_price_by_trans = df.groupby('transmission')['price'].mean().sort_values(ascending=False)
+        st.dataframe(average_price_by_trans)
+
 with tab2: 
     st.markdown("Masukkan spesifikasi mobil untuk mendapatkan estimasi harga")
 
