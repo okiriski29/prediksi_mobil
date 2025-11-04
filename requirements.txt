@@ -3,4 +3,6 @@ scikit-learn
 joblib
 streamlit
 streamlit-lottie
-st_lottie
+time
+json
+datetime
