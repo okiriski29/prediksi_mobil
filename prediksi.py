@@ -14,7 +14,8 @@ years = list(range(1997, current_year + 1))
 path = "Car.json"
 with open(path,"r") as file:
     url = json.load(file)
-
+eval = pd.read_csv('evaluasi_rf.csv')
+feature = pd.read_csv('feature_importances.csv')
 # --- 1. Konfigurasi dan Pemuatan Model ---
 @st.cache_resource # Memuat model hanya sekali untuk efisiensi
 def load_ml_model(model_path):
@@ -55,24 +56,60 @@ st.set_page_config(page_title="Prediksi Harga Mobil", layout="wide")
 st.title("🚗 Prediksi Harga Mobil Bekas Toyota")
 tab1, tab2 = st.tabs(["Beranda", "Prediksi"])
 with tab1:
-    st.header('Selamat Datang Di Prediksi Mobil Toyota Bekas')
-    st.write('Dataset berasal dari :')
+    st.header('💫 Selamat Datang Di Prediksi Mobil Toyota Bekas 💫')
+    st.write('Sumber Dataset : ')
     st.link_button("Dataset", "https://www.kaggle.com/datasets/adityadesai13/used-car-dataset-ford-and-mercedes?resource=download&select=toyota.csv")
     df = pd.read_csv('toyota.csv')
     st.dataframe(df)
-    kol_1, kol_2, kol_3 = st.columns([1, 1, 1])
+    
+    kol_1, kol_2, kol_3, kol_4, kol_5 = st.columns([1, 1, 1, 1, 1])
     with kol_1:
-        st.subheader("Rata-Rata Harga Berdasarkan Model Mobil")
-        average_price_by_model = df.groupby('model')['price'].mean().sort_values(ascending=False)
-        st.dataframe(average_price_by_model)
+        st.subheader('Evaluasi Model')
+        st.write('')
+        st.write('')
+        st.dataframe(eval)
     with kol_2:
-        st.subheader("Rata-Rata Harga Berdasarkan Bahan Bakar")
-        average_price_by_fuel = df.groupby('fuelType')['price'].mean().sort_values(ascending=False)
-        st.dataframe(average_price_by_fuel)
+        st.subheader("Tingkat Pengaruh Masing-Masing Fitur")
+        st.dataframe(feature)
     with kol_3:
         st.subheader("Rata-Rata Harga Berdasarkan Transmisi")
         average_price_by_trans = df.groupby('transmission')['price'].mean().sort_values(ascending=False)
         st.dataframe(average_price_by_trans)
+    with kol_4:
+        st.subheader("Rata-Rata Harga Berdasarkan Bahan Bakar")
+        average_price_by_fuel = df.groupby('fuelType')['price'].mean().sort_values(ascending=False)
+        st.dataframe(average_price_by_fuel)
+    with kol_5:
+        st.subheader("Rata-Rata Harga Berdasarkan Model Mobil")
+        average_price_by_model = df.groupby('model')['price'].mean().sort_values(ascending=False)
+        st.dataframe(average_price_by_model)
+
+    st.header('📊 Visualisasi Data 📊')
+    kol_1, kol_2 = st.columns([1, 1])
+    with kol_1:
+        st.subheader('Actual Price vs Predicted Price')
+        st.image('Visualisasi/actual_vs_predicted_linear_regression.png')
+    with kol_2:
+        st.subheader('Histogram Residuals')
+        st.image('Visualisasi/histogram_of_residuals.png')
+   
+    kol_1, kol_2 = st.columns([1, 1])
+    with kol_1:
+        st.subheader('Actual Price vs Predicted Price')
+        st.image('Visualisasi/distribusi harga.png')
+    with kol_2:
+        st.subheader('Histogram Residuals')
+        st.image('Visualisasi/Harga Tahun.png')
+
+    kol_1, kol_2 = st.columns([1, 1])
+    with kol_1:
+        st.subheader('Residuals vs Fitted Values')
+        st.image('Visualisasi/residuals_vs_fitted_values.png')
+    with kol_2:
+        st.subheader('Korelasi Data Numerik')
+        st.image('Visualisasi/korelasi_data_numerik.png')
+    st.subheader('Rata-Rata Harga Mobil Berdasarkan Model')
+    st.image('Visualisasi/Rata-rata harga mobil.png')
 
 with tab2: 
     st.markdown("Masukkan spesifikasi mobil untuk mendapatkan estimasi harga")
